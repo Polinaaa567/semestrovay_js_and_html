@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="1.js"></script>
     <meta charset="utf-8">
     <title>Приветствие</title>
     <style>
-        label{
+        label {
             margin: 5px ;
             font-size: 120%;
             font-family: 'Times New Roman', Times, serif;
         }
-        button{
+        button {
             margin: 5px;
             font-size: 100%;
             text-align: center;
             font-family: 'Times New Roman', Times, serif;
         } 
-        input{
-            /* background-color:blueviolet; */
+        input {
             font-size: 100%;
-            /* color:aliceblue; */
             font-family: 'Times New Roman', Times, serif;
         }
     </style>
-    
 </head>
 <body>
-    <form>
+    <form action="main.html">
         <label for="name">Введите своё имя</label>
         <input type="text" id ='name' placeholder="Имя" >
-        <button type="submit" id="submit">Далее</button>
+        <button id="submit" onClick="Name()">Далее</button>
 
     </form>
-    <script src="1.js"></script>
+    
 </body>
 </html>
