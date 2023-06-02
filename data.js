@@ -1,9 +1,8 @@
 let url = 'https://pokeapi.co/api/v2/pokemon';
 
-
 // функция которая возвращает данные в виде имени покемонов и url,
 
-async function fetchData() {
+export async function fetchData() {
     let response = await fetch(url);
     let data = await response.json();
 
@@ -31,13 +30,16 @@ function createTable(pokemonList) {
     let abilitieHeader = document.createElement('th');
     let headerRow = document.createElement('tr');
 
-    idHeader.textContent = 'id';
-    nameHeader.textContent = 'name';
-    typeHeader.textContent = 'type';
-    abilitieHeader.textContent = 'abilitie';
+    idHeader.textContent = 'ID';
+    nameHeader.textContent = 'Name';
+    typeHeader.textContent = 'Type';
+    abilitieHeader.textContent = 'Abilitie';
 
-    headerRow.appendChild(idHeader, nameHeader, typeHeader, abilitieHeader);
-
+    headerRow.appendChild(idHeader);
+    headerRow.appendChild(nameHeader);
+    headerRow.appendChild(typeHeader);
+    headerRow.appendChild(abilitieHeader);
+    
     table.appendChild(headerRow);
 
     pokemonList.forEach(async (pokemon) => {
@@ -47,19 +49,20 @@ function createTable(pokemonList) {
         let row = document.createElement("tr");
         let idCell = document.createElement("td");
         let nameCell = document.createElement("td");
-        let typeCell = document.createElement('th');
-        let abilitieCell = document.createElement('th');
+        let typeCell = document.createElement('td');
+        let abilitieCell = document.createElement('td');
 
         idCell.innerText = id;
         nameCell.innerText = name;
         typeCell.innerText = type;
         abilitieCell.innerText = abilities;
 
-        row.appendChild(idCell, nameCell, typeCell, abilitieCell);
+        row.appendChild(idCell);
+        row.appendChild(nameCell);
+        row.appendChild(typeCell);
+        row.appendChild(abilitieCell);
         table.appendChild(row);
     });
 
     document.body.appendChild(table);
 }
-
-fetchData();

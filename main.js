@@ -1,15 +1,17 @@
-let username = localStorage.getItem('username');
+import { fetchData} from "./data.js";
 
-document.getElementById('username').innerHTML = username;
+function name_get() {
+    let username = localStorage.getItem('username');
 
-let buttonAll = document.createElement('button');
-
-buttonAll.id = 'buttonAll'
-
-buttonAll.onclick = function() {
-    // необходимо здесь подключать табличку с покемонами и чекбоксами
+    document.getElementById('username').innerHTML = username;
 }
 
-buttonAll.textContent='All';
+name_get()
+
+let buttonAll = document.createElement('button');
+buttonAll.id = 'buttonAll'
+buttonAll.textContent='Всё о покемонах';
+
+buttonAll.addEventListener('click', fetchData)
 
 document.body.appendChild(buttonAll)

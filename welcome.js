@@ -27,7 +27,6 @@ buttonNext.addEventListener('click', async (event) => {
         await saveUsername(name);
         window.location.replace('main.html')
     }
-   
 });
 
 form.append(askLabel, nameInput, buttonNext);
