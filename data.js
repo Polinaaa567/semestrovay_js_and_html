@@ -18,51 +18,59 @@ async function fetchPokemonData(pokemonUrl) {
         id: data.id,
         name: data.name,
         type: data.types.map(type => type.type.name).join(', '),
-        abilities: data.abilities.map(ability => ability.ability.name).join(', ')
+        abilities: data.abilities.map(ability => ability.ability.name).join(', '), 
+        image: data.sprites.front_default
     }
 }
 
 function createTable(pokemonList) {
     let table = document.createElement('table');
-    let idHeader = document.createElement('th');
-    let nameHeader = document.createElement('th');
-    let typeHeader = document.createElement('th');
-    let abilitieHeader = document.createElement('th');
     let headerRow = document.createElement('tr');
 
-    idHeader.textContent = 'ID';
-    nameHeader.textContent = 'Name';
-    typeHeader.textContent = 'Type';
-    abilitieHeader.textContent = 'Abilitie';
+    let headers = ['ID', 'Name', 'Type', 'Abilitie', 'Image']
 
-    headerRow.appendChild(idHeader);
-    headerRow.appendChild(nameHeader);
-    headerRow.appendChild(typeHeader);
-    headerRow.appendChild(abilitieHeader);
+    headers.forEach(header => {
+        let th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+
+    })
     
     table.appendChild(headerRow);
 
     pokemonList.forEach(async (pokemon) => {
 
-        let {id, name, type, abilities} = await fetchPokemonData(pokemon.url);
+        let {id, name, type, abilities, image} = await fetchPokemonData(pokemon.url);
 
         let row = document.createElement("tr");
         let idCell = document.createElement("td");
         let nameCell = document.createElement("td");
         let typeCell = document.createElement('td');
         let abilitieCell = document.createElement('td');
+        let imageCell = document.createElement('td');
+        let imageElem = document.createElement('img');
 
         idCell.innerText = id;
         nameCell.innerText = name;
         typeCell.innerText = type;
         abilitieCell.innerText = abilities;
+        imageElem.src = image;
+        
+        imageCell.appendChild(imageElem);
 
         row.appendChild(idCell);
         row.appendChild(nameCell);
         row.appendChild(typeCell);
         row.appendChild(abilitieCell);
+        row.appendChild(imageCell);
+        
         table.appendChild(row);
     });
 
-    document.body.appendChild(table);
+    let tableCon = document.getElementById("tableee")
+    
+    while (tableCon.firstChild) {
+        tableCon.removeChild(tableCon.firstChild);
+    }       
+    tableCon.appendChild(table);
 }

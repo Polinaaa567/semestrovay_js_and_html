@@ -32,4 +32,3 @@ buttonNext.addEventListener('click', async (event) => {
 form.append(askLabel, nameInput, buttonNext);
 
 document.body.append(form);
-
