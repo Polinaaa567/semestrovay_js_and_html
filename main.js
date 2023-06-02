@@ -8,6 +8,7 @@ function name_get() {
 
 name_get()
 
+
 let buttonAll = document.createElement('button');
 buttonAll.id = 'buttonAll'
 buttonAll.textContent='Всё о покемонах';
@@ -41,6 +42,6 @@ function sortTable() {
 }
 
 sortCheckBox.addEventListener('change', sortTable)
+sortLabel.appendChild(sortCheckBox)
 
-document.body.appendChild(sortCheckBox);
 document.body.appendChild(sortLabel);

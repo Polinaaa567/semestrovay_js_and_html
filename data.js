@@ -1,4 +1,4 @@
-let url = 'https://pokeapi.co/api/v2/pokemon';
+let url = 'https://pokeapi.co/api/v2/pokemon?limit=40';
 
 // функция которая возвращает данные в виде имени покемонов и url,
 
@@ -74,3 +74,4 @@ function createTable(pokemonList) {
     }       
     tableCon.appendChild(table);
 }
+
