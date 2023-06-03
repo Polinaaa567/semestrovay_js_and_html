@@ -1,4 +1,4 @@
-import {fetchData} from "./data.js";
+import { filterTable} from "./data.js";
 
 function name_get() {
     let username = localStorage.getItem('username');
@@ -8,21 +8,24 @@ function name_get() {
 
 name_get()
 
+let site = document.createElement('my_var');
 
-let buttonAll = document.createElement('button');
-buttonAll.id = 'buttonAll'
-buttonAll.textContent='Всё о покемонах';
-buttonAll.addEventListener('click', fetchData)
+let pokemonImg = document.createElement('img');
+pokemonImg.src = '3.jpg';
 
-document.body.appendChild(buttonAll);
+let siteDescription = document.createElement('p');
+siteDescription.textContent = 'Welcome to the Pokemon Database! \
+Here you can find all the stats and info you need on your favorite Pokemon! \
+Click on a Pokemon to learn more.';
+
+let table = document.getElementById('tableee');
+console.log(table)
 
 let sortCheckBox = document.createElement('input');
 sortCheckBox.type = 'checkbox';
 sortCheckBox.id = 'sort-CheckBox';
 
 let sortLabel = document.createElement('label');
-sortLabel.innerText = 'Sort by ID';
-sortLabel.htmlFor = 'sort-CheckBox';
 
 function sortTable() {
     let table = document.querySelector('table');
@@ -41,7 +44,35 @@ function sortTable() {
     rows.forEach(row => table.appendChild(row));
 }
 
+sortLabel.innerText = 'Sort by ID';
+sortLabel.htmlFor = 'sort-CheckBox';
+
 sortCheckBox.addEventListener('change', sortTable)
 sortLabel.appendChild(sortCheckBox)
 
-document.body.appendChild(sortLabel);
+let filter = document.createElement('select');
+filter.id = 'filter';
+filter.addEventListener('change', filterTable);
+
+let option = document.createElement('option');
+option.value = 'all';
+option.textContent = 'All types';
+filter.appendChild(option);
+
+let filterTypes = ['water', 'grass', 'fire', 'flying', 'bug'];
+
+filterTypes.forEach(type => {
+    let option = document.createElement('option');
+    option.value = type;
+    option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+    filter.appendChild(option);
+})
+
+site.appendChild(pokemonImg);
+site.appendChild(siteDescription);
+site.appendChild(filter);
+site.appendChild(sortLabel);
+
+document.body.appendChild(site);
+
+document.body.insertBefore(site, table);

@@ -1,14 +1,12 @@
 let url = 'https://pokeapi.co/api/v2/pokemon?limit=40';
 
 // функция которая возвращает данные в виде имени покемонов и url,
-
-export async function fetchData() {
+async function fetchData() {
     let response = await fetch(url);
     let data = await response.json();
 
-    createTable(data.results);
+    return data.results;
 }
-
 // в котором прописаны способности и тип
 async function fetchPokemonData(pokemonUrl) {
     let response = await fetch(pokemonUrl);
@@ -16,31 +14,28 @@ async function fetchPokemonData(pokemonUrl) {
 
     return {
         id: data.id,
-        name: data.name,
+        name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
         type: data.types.map(type => type.type.name).join(', '),
         abilities: data.abilities.map(ability => ability.ability.name).join(', '), 
         image: data.sprites.front_default
     }
 }
 
-function createTable(pokemonList) {
-    let table = document.createElement('table');
-    let headerRow = document.createElement('tr');
+let table = document.createElement('table');
+let headerRow = document.createElement('tr');
 
-    let headers = ['ID', 'Name', 'Type', 'Abilitie', 'Image']
+let headers = ['ID', 'Name', 'Type', 'Abilitie', 'Image']
 
-    headers.forEach(header => {
-        let th = document.createElement('th');
-        th.textContent = header;
-        headerRow.appendChild(th);
+headers.forEach(header => {
+    let th = document.createElement('th');
+    th.textContent = header;
+    headerRow.appendChild(th);
+})
 
-    })
-    
-    table.appendChild(headerRow);
+table.appendChild(headerRow);
 
-    pokemonList.forEach(async (pokemon) => {
-
-        let {id, name, type, abilities, image} = await fetchPokemonData(pokemon.url);
+async function createPokemonRow(pokemon) {
+    let {id, name, type, abilities, image} = await fetchPokemonData(pokemon.url);
 
         let row = document.createElement("tr");
         let idCell = document.createElement("td");
@@ -65,13 +60,44 @@ function createTable(pokemonList) {
         row.appendChild(imageCell);
         
         table.appendChild(row);
-    });
+
+}
+
+async function createTable() {
+    let pokemonList = await fetchData(); 
+    await Promise.all(
+        pokemonList.map(pokemon => createPokemonRow(pokemon))
+    );
 
     let tableCon = document.getElementById("tableee")
     
     while (tableCon.firstChild) {
         tableCon.removeChild(tableCon.firstChild);
     }       
+
     tableCon.appendChild(table);
 }
 
+export async function filterTable() {
+    let table = document.querySelector('table');
+    let rows = Array.from(table.querySelectorAll('tr'));
+    
+    rows.shift();
+
+    let selectedType = filter.value;
+
+    if (selectedType !== 'all') {
+        rows.forEach(row => {
+            let typeCell = row.querySelector('td:nth-child(3)');
+            if (!typeCell.innerText.includes(selectedType)) {
+                row.style.display = 'none';
+            } else {
+                row.style.display = 'green';
+            }
+        })
+    } else {
+        rows.forEach(row => row.style.display = '');
+    }
+}
+
+createTable();

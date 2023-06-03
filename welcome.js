@@ -32,3 +32,27 @@ buttonNext.addEventListener('click', async (event) => {
 form.append(askLabel, nameInput, buttonNext);
 
 document.body.append(form);
+
+let image1 = new Image();
+
+image1.src = '1.gif';
+image1.crossOrigin = '';
+
+let canvas = document.createElement('canvas');
+let ctx = canvas.getContext('2d');
+
+canvas.width = image1.width;
+canvas.height = image1.height;
+
+ctx.translate(canvas.width, 0);
+ctx.scale(-1, 1);
+ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
+
+let mirroredImage = new Image();
+mirroredImage.src = canvas.toDataURL();
+
+function loaded() {
+    document.body.appendChild(image1);
+}
+
+image1.onload = loaded;
