@@ -43,6 +43,7 @@ async function createPokemonRow(pokemon) {
         let typeCell = document.createElement('td');
         let abilitieCell = document.createElement('td');
         let imageCell = document.createElement('td');
+        let imageLink = document.createElement('a');
         let imageElem = document.createElement('img');
 
         idCell.innerText = id;
@@ -50,9 +51,11 @@ async function createPokemonRow(pokemon) {
         typeCell.innerText = type;
         abilitieCell.innerText = abilities;
         imageElem.src = image;
+        imageElem.width =120;
         
         imageCell.appendChild(imageElem);
-
+        imageCell.appendChild(imageLink);
+        
         row.appendChild(idCell);
         row.appendChild(nameCell);
         row.appendChild(typeCell);

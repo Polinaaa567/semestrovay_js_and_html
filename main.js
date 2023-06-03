@@ -12,6 +12,7 @@ let site = document.createElement('my_var');
 
 let pokemonImg = document.createElement('img');
 pokemonImg.src = '3.jpg';
+pokemonImg.width = 650;
 
 let siteDescription = document.createElement('p');
 siteDescription.textContent = 'Welcome to the Pokemon Database! \
@@ -19,7 +20,6 @@ Here you can find all the stats and info you need on your favorite Pokemon! \
 Click on a Pokemon to learn more.';
 
 let table = document.getElementById('tableee');
-console.log(table)
 
 let sortCheckBox = document.createElement('input');
 sortCheckBox.type = 'checkbox';
