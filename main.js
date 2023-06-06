@@ -1,4 +1,4 @@
-import { filterTable} from "./data.js";
+import { filterTable, filterTableByName} from "./data.js";
 
 function name_get() {
     let username = localStorage.getItem('username');
@@ -9,6 +9,7 @@ function name_get() {
 name_get()
 
 let site = document.createElement('my_var');
+site.className = 'my_var';
 
 let pokemonImg = document.createElement('img');
 pokemonImg.src = '3.jpg';
@@ -72,6 +73,36 @@ site.appendChild(pokemonImg);
 site.appendChild(siteDescription);
 site.appendChild(filter);
 site.appendChild(sortLabel);
+
+document.body.appendChild(site);
+
+// ------------------
+
+let searchLabel = document.createElement('label');
+searchLabel.htmlFor = 'search';
+searchLabel.innerText = 'Search by name';
+
+let searchInput = document.createElement('input');
+searchInput.type = 'text';
+searchInput.id = 'search';
+searchInput.name = 'search';
+
+let searchButton = document.createElement('button');
+searchButton.id = 'search-button';
+searchButton.innerText = 'Find';
+
+searchLabel.appendChild(searchInput);
+searchLabel.appendChild(searchButton);
+
+site.appendChild(searchLabel);
+
+searchButton.addEventListener('click', filterTableByName);
+
+// searchInput.addEventListener('keydown', (event)=> {
+//   if(event.key === 'Enter'){
+//     filterTableByName();
+//   }
+// });
 
 document.body.appendChild(site);
 

@@ -18,7 +18,7 @@ async function fetchPokemonData(pokemonUrl) {
         type: data.types.map(type => type.type.name).join(', '),
         abilities: data.abilities.map(ability => ability.ability.name).join(', '), 
         image: data.sprites.front_default
-    }
+    };
 }
 
 let table = document.createElement('table');
@@ -43,8 +43,8 @@ async function createPokemonRow(pokemon) {
         let typeCell = document.createElement('td');
         let abilitieCell = document.createElement('td');
         let imageCell = document.createElement('td');
-        let imageLink = document.createElement('a');
         let imageElem = document.createElement('img');
+        imageElem.className = 'pokemon-image';
 
         idCell.innerText = id;
         nameCell.innerText = name;
@@ -54,7 +54,6 @@ async function createPokemonRow(pokemon) {
         imageElem.width =120;
         
         imageCell.appendChild(imageElem);
-        imageCell.appendChild(imageLink);
         
         row.appendChild(idCell);
         row.appendChild(nameCell);
@@ -82,7 +81,6 @@ async function createTable() {
 }
 
 export async function filterTable() {
-    let table = document.querySelector('table');
     let rows = Array.from(table.querySelectorAll('tr'));
     
     rows.shift();
@@ -95,12 +93,29 @@ export async function filterTable() {
             if (!typeCell.innerText.includes(selectedType)) {
                 row.style.display = 'none';
             } else {
-                row.style.display = 'green';
+                row.style.display = '';
             }
-        })
+        });
     } else {
         rows.forEach(row => row.style.display = '');
     }
+}
+
+export async function filterTableByName() {
+    let searchValue = searchInput.value.toLowerCase();
+
+    let rows = Array.from(table.querySelectorAll('tr'));
+    
+    rows.shift();
+
+    rows.forEach(row => {
+        let nameCell = row.querySelector('td:nth-child(2)');
+        if (!nameCell.innerText.toLowerCase().includes(searchValue)) {
+            row.style.display = 'none';
+        } else {
+            row.style.display = '';
+        }
+    });
 }
 
 createTable();
