@@ -17,8 +17,7 @@ pokemonImg.width = 650;
 
 let siteDescription = document.createElement('p');
 siteDescription.textContent = 'Welcome to the Pokemon Database! \
-Here you can find all the stats and info you need on your favorite Pokemon! \
-Click on a Pokemon to learn more.';
+Here you can find all the stats and info you need on your favorite Pokemon!';
 
 let table = document.getElementById('tableee');
 
@@ -84,8 +83,8 @@ searchLabel.innerText = 'Search by name';
 
 let searchInput = document.createElement('input');
 searchInput.type = 'text';
-searchInput.id = 'search';
-searchInput.name = 'search';
+searchInput.id = 'searchInput';
+searchInput.name = 'searchInput';
 
 let searchButton = document.createElement('button');
 searchButton.id = 'search-button';
@@ -98,11 +97,11 @@ site.appendChild(searchLabel);
 
 searchButton.addEventListener('click', filterTableByName);
 
-// searchInput.addEventListener('keydown', (event)=> {
-//   if(event.key === 'Enter'){
-//     filterTableByName();
-//   }
-// });
+searchInput.addEventListener('keydown', (event)=> {
+  if(event.key === 'Enter'){
+    filterTableByName();
+  }
+});
 
 document.body.appendChild(site);
 
