@@ -45,18 +45,6 @@ image1.onload = loaded;
 
 document.body.append(form);
 
-// maxElemLeft = document.documentElement.clientWidth - buttonNext.offsetWidth;
-// maxElemTop = document.documentElement.clientHeight - buttonNext.offsetHeight;
-
-// buttonNext.onmousemove = handler;
-
-// function handler() {
-//     elemLeft = Math.random() * maxElemLeft;
-//     buttonNext.style.left = elemLeft + 'px';
-//     elemTop = Math.random() * maxElemTop;
-//     buttonNext.style.top = elemTop + 'px';
-
-// }
 let random = (min, max) => {
     let rand = min + Math.random() * (max - min + 1);
     return Math.floor(rand);
@@ -65,7 +53,7 @@ let random = (min, max) => {
  buttonNext.addEventListener('mouseenter', ()=> {
     let audio = new Audio('2.mp3');
     audio.play();
-    
+
     buttonNext.style.left = `${random(0, 90)}%`;
     buttonNext.style.top =  `${random(0, 90)}%`;
  })
