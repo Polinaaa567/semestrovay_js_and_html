@@ -6,7 +6,7 @@ let site = document.createElement('my_var');
 site.className = 'my_var';
 
 let pokemonImg = document.createElement('img');
-pokemonImg.src = '3.jpg';
+pokemonImg.src = 'Main/files/3.jpg';
 pokemonImg.width = 650;
 
 let siteDescription = document.createElement('p');
@@ -17,11 +17,11 @@ let table = document.getElementById('tableee');
 
 let sortCheckBox = document.createElement('input');
 sortCheckBox.type = 'checkbox';
-sortCheckBox.id = 'sort-CheckBox';
+sortCheckBox.id = 'sort_CheckBox';
 
 let sortLabel = document.createElement('label');
 
-function sortTable() {
+async function sortTable() {
     let table = document.querySelector('table');
     let rows = Array.from(table.querySelectorAll('tr'));
     
@@ -39,7 +39,7 @@ function sortTable() {
 }
 
 sortLabel.innerText = 'Sort by ID';
-sortLabel.htmlFor = 'sort-CheckBox';
+sortLabel.htmlFor = 'sort_CheckBox';
 
 sortCheckBox.addEventListener('change', sortTable)
 sortLabel.appendChild(sortCheckBox)

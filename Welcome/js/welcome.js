@@ -34,7 +34,7 @@ form.append(askLabel, nameInput, buttonNext);
 
 let image1 = new Image();
 
-image1.src = '5.gif';
+image1.src = 'Welcome/files/5.gif';
 image1.crossOrigin = '';
 
 function loaded() {
@@ -51,7 +51,7 @@ let random = (min, max) => {
 }
 
  buttonNext.addEventListener('mouseenter', ()=> {
-    let audio = new Audio('2.mp3');
+    let audio = new Audio('Welcome/files/2.mp3');
     audio.play();
 
     buttonNext.style.left = `${random(0, 90)}%`;

@@ -21,7 +21,7 @@ export async function fetchPokemonData(pokemonUrl) {
 }
 
 export async function fetchRelatedAnime() {
-    let response = await fetch('https://api.jikan.moe/v4/anime?q=pokemon&limit=6');
+    let response = await fetch('https://api.jikan.moe/v4/anime?q=pokemon&limit=10ℴ_by=rand');
     let data = await response.json();
 
     return data.data;

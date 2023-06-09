@@ -22,32 +22,31 @@ table.appendChild(headerRow);
 async function createPokemonRow(pokemon) {
     let {id, name, type, abilities, image} = await fetchPokemonData(pokemon.url);
 
-        let row = document.createElement("tr");
-        let idCell = document.createElement("td");
-        let nameCell = document.createElement("td");
-        let typeCell = document.createElement('td');
-        let abilitieCell = document.createElement('td');
-        let imageCell = document.createElement('td');
-        let imageElem = document.createElement('img');
-        imageElem.className = 'pokemon-image';
+    let row = document.createElement("tr");
+    let idCell = document.createElement("td");
+    let nameCell = document.createElement("td");
+    let typeCell = document.createElement('td');
+    let abilitieCell = document.createElement('td');
+    let imageCell = document.createElement('td');
+    let imageElem = document.createElement('img');
+    imageElem.className = 'pokemon-image';
 
-        idCell.innerText = id;
-        nameCell.innerText = name;
-        typeCell.innerText = type;
-        abilitieCell.innerText = abilities;
-        imageElem.src = image;
-        imageElem.width =120;
+    idCell.innerText = id;
+    nameCell.innerText = name;
+    typeCell.innerText = type;
+    abilitieCell.innerText = abilities;
+    imageElem.src = image;
+    imageElem.width =120;
         
-        imageCell.appendChild(imageElem);
+    imageCell.appendChild(imageElem);
+      
+    row.appendChild(idCell);
+    row.appendChild(nameCell);
+    row.appendChild(typeCell);
+    row.appendChild(abilitieCell);
+    row.appendChild(imageCell);
         
-        row.appendChild(idCell);
-        row.appendChild(nameCell);
-        row.appendChild(typeCell);
-        row.appendChild(abilitieCell);
-        row.appendChild(imageCell);
-        
-        table.appendChild(row);
-
+    table.appendChild(row);
 }
 
 export async function createTable() {
@@ -130,10 +129,10 @@ export async function addRelatedInfo() {
               <p>Description: ${anime.synopsis}</p>
           `;
 
-          let animeTrailerLink = anime.url || '';
-          console.log(animeTrailerLink);
+          let animeLink = anime.url || '';
+          console.log(animeLink);
           animePoster.addEventListener('click', ()=> {
-              window.open(animeTrailerLink, '_blanc');
+              window.open(animeLink, '_blanc');
           });
 
           animeElem.appendChild(animePoster);
@@ -144,32 +143,41 @@ export async function addRelatedInfo() {
   });
 
   // Добавление информации о мангах
-  relatedMangaList.forEach(manga => {
-      let mangaElem = document.createElement('div');
+    relatedMangaList.forEach(manga => {
+        let mangaElem = document.createElement('div');
 
-      let mangaPoster = document.createElement('img');
-      mangaPoster.src = manga.images.jpg.image_url;
-      mangaPoster.width = 150;
-      mangaElem.appendChild(mangaPoster);
-      if (manga.title_english){
+        let mangaPoster = document.createElement('img');
+        mangaPoster.src = manga.images.jpg.image_url;
+        mangaPoster.width = 150;
+        
+        if (manga.title_english){
 
-      let mangaInfo = document.createElement('div');
-      mangaInfo.innerHTML = `
-          <strong>${manga.title_english}</strong>
-          <p>Chapters: ${manga.chapters}</p>
-          <p>Rating: ${manga.scored}</p>
-          <p>Description: ${manga.synopsis}</p>
-      `;
-      mangaElem.appendChild(mangaInfo);
+        let mangaInfo = document.createElement('div');
+        mangaInfo.innerHTML = `
+            <strong>${manga.title_english}</strong>
+            <p>Chapters: ${manga.chapters}</p>
+            <p>Rating: ${manga.scored}</p>
+            <p>Description: ${manga.synopsis}</p>
+        `;
 
-      relatedMangaElem.appendChild(mangaElem);
-      }
-  });
+        let MangaLink = manga.url || '';
+            console.log(MangaLink);
+            
+            mangaPoster.addEventListener('click', ()=> {
+                window.open(MangaLink, '_blanc');
+            });
 
-  document.body.appendChild(relatedAnimeElem);
-  let Pokemon_Manga = document.createElement('h2');
-  Pokemon_Manga.innerText = 'Pokemon Manga';
+        mangaElem.appendChild(mangaPoster);
+        mangaElem.appendChild(mangaInfo);
 
-  document.body.appendChild(Pokemon_Manga);
-  document.body.appendChild(relatedMangaElem);
+        relatedMangaElem.appendChild(mangaElem);
+        }
+    });
+
+    document.body.appendChild(relatedAnimeElem);
+    let Pokemon_Manga = document.createElement('h2');
+    Pokemon_Manga.innerText = 'Pokemon Manga';
+
+    document.body.appendChild(Pokemon_Manga);
+    document.body.appendChild(relatedMangaElem);
 }
