@@ -1,0 +1,42 @@
+header{
+    position: sticky;
+    z-index:1;
+    top: 0;
+    font-size: 70%;
+    line-height: 50px;
+    text-align: center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color:rgb(133, 206, 210)
+}
+th, td {
+    border: 2px solid grey;
+    padding: 2px 30px;
+    text-align: center;
+    font-size: 110%;
+    font-family: 'Times New Roman', Times, serif;
+} 
+
+img{
+    height: auto;
+    display:block;
+    margin:auto;
+    
+}
+button{
+    text-align: center;
+    font-size: 90%;
+    font-family: 'Times New Roman', Times, serif;
+}
+.my_var{
+    text-align: center;;
+    font-size: 110%;
+    font-family: 'Times New Roman', Times, serif;
+}
+.pokemon-image:hover {
+    transform: scale(1.2);
+    transition: transform  0.2s ease-in-out;
+}
+
+label {
+    margin: 10px;
+}
