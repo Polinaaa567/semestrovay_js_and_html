@@ -1,8 +1,6 @@
-let url = 'https://pokeapi.co/api/v2/pokemon?limit=40';
-
 // функция которая возвращает данные в виде имени покемонов и url,
 async function fetchData() {
-    let response = await fetch(url);
+    let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=40');
     let data = await response.json();
 
     return data.results;
@@ -65,7 +63,7 @@ async function createPokemonRow(pokemon) {
 
 }
 
-async function createTable() {
+export async function createTable() {
     let pokemonList = await fetchData(); 
     await Promise.all(
         pokemonList.map(pokemon => createPokemonRow(pokemon))
@@ -73,10 +71,6 @@ async function createTable() {
 
     let tableCon = document.getElementById("tableee")
     
-    while (tableCon.firstChild) {
-        tableCon.removeChild(tableCon.firstChild);
-    }       
-
     tableCon.appendChild(table);
 }
 
@@ -118,4 +112,95 @@ export async function filterTableByName() {
     });
 }
 
-createTable();
+async function fetchRelatedAnime() {
+    let response = await fetch('https://api.jikan.moe/v4/anime?q=pokemon&limit=6');
+    let data = await response.json();
+
+    return data.data;
+}
+
+async function fetchRelatedManga() {
+    let response = await fetch('https://api.jikan.moe/v4/manga?q=pokemon&limit=10');
+    let data = await response.json();
+
+    return data.data;
+}
+
+async function addRelatedInfo() {
+    let relatedAnimeList = await fetchRelatedAnime();
+    let relatedMangaList = await fetchRelatedManga();
+
+    let relatedAnimeElem = document.createElement('div');
+    let Pokemon_Movie = document.createElement('h2');
+    Pokemon_Movie.innerText = 'Pokemon Movie';
+
+    document.body.appendChild(Pokemon_Movie);
+    
+    let relatedMangaElem = document.createElement('div');
+
+    // Добавление информации об аниме
+    relatedAnimeList.forEach(anime => {
+        let animeElem = document.createElement('div');
+
+        let animePoster = document.createElement('img');
+        animePoster.src = anime.images.jpg.image_url;
+        animePoster.width = 150;
+        
+
+        let animeInfo = document.createElement('div');
+        if (anime.title_english && anime.episodes && anime.score) {
+            animeInfo.innerHTML = `
+                <strong>${anime.title_english}</strong>
+                <p>Episodes: ${anime.episodes}</p>
+                <p>Rating: ${anime.score}</p>
+                <p>Description: ${anime.synopsis}</p>
+            `;
+
+            let animeTrailerLink = anime.url || '';
+            console.log(animeTrailerLink);
+            animePoster.addEventListener('click', ()=> {
+                window.open(animeTrailerLink, '_blanc');
+            });
+
+            animeElem.appendChild(animePoster);
+            animeElem.appendChild(animeInfo);
+            relatedAnimeElem.appendChild(animeElem);
+        
+        }        
+    });
+
+    // Добавление информации о мангах
+    relatedMangaList.forEach(manga => {
+        let mangaElem = document.createElement('div');
+
+        let mangaPoster = document.createElement('img');
+        mangaPoster.src = manga.images.jpg.image_url;
+        mangaPoster.width = 150;
+        mangaElem.appendChild(mangaPoster);
+        if (manga.title_english){
+
+        let mangaInfo = document.createElement('div');
+        mangaInfo.innerHTML = `
+            <strong>${manga.title_english}</strong>
+            <p>Chapters: ${manga.chapters}</p>
+            <p>Rating: ${manga.scored}</p>
+            <p>Description: ${manga.synopsis}</p>
+        `;
+        mangaElem.appendChild(mangaInfo);
+
+        relatedMangaElem.appendChild(mangaElem);
+        }
+    });
+
+    // Добавление элементов на страницу
+    document.body.appendChild(relatedAnimeElem);
+    let Pokemon_Manga = document.createElement('h2');
+    Pokemon_Manga.innerText = 'Pokemon Manga';
+
+    document.body.appendChild(Pokemon_Manga);
+
+    document.body.appendChild(relatedMangaElem);
+}
+
+// Добавление связанной информации для первого покемона из таблицы
+addRelatedInfo();

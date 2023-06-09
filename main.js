@@ -1,4 +1,4 @@
-import { filterTable, filterTableByName} from "./data.js";
+import {createTable, filterTable, filterTableByName} from "./data.js";
 
 function name_get() {
     let username = localStorage.getItem('username');
@@ -75,6 +75,7 @@ site.appendChild(sortLabel);
 
 document.body.appendChild(site);
 
+createTable();
 // ------------------
 
 let searchLabel = document.createElement('label');
