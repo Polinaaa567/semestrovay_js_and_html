@@ -17,7 +17,7 @@ th, td {
 } 
 
 img{
-    height: auto;
+    /* height: auto; */
     display:block;
     margin:auto;
     

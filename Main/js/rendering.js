@@ -1,105 +1,128 @@
 import {name_get, createTable, filterTable, filterTableByName, addRelatedInfo} from './main.js'
 
-name_get()
+class PokemonDatabase {
+  constructor() {
+    this.slideIndex = 0;
+    this.images = ['Main/files/1.jpg', 'Main/files/2.jpg'];
+    this.filterTypes = ['water', 'grass', 'fire', 'flying', 'bug'];
 
-let site = document.createElement('my_var');
-site.className = 'my_var';
+    this.name_get = name_get;
+    this.createTable = createTable;
+    this.filterTable = filterTable;
+    this.filterTableByName = filterTableByName;
+    this.addRelatedInfo = addRelatedInfo;
 
-let pokemonImg = document.createElement('img');
-pokemonImg.src = 'Main/files/3.jpg';
-pokemonImg.width = 650;
+    this.init();
+  }
 
-let siteDescription = document.createElement('p');
-siteDescription.textContent = 'Welcome to the Pokemon Database! \
-Here you can find all the stats and info you need on your favorite Pokemon!';
+  init() {
+    this.site = document.createElement('my_var');
+    this.site.className = 'my_var';
 
-let table = document.getElementById('tableee');
-
-let sortCheckBox = document.createElement('input');
-sortCheckBox.type = 'checkbox';
-sortCheckBox.id = 'sort_CheckBox';
-
-let sortLabel = document.createElement('label');
-
-async function sortTable() {
-    let table = document.querySelector('table');
-    let rows = Array.from(table.querySelectorAll('tr'));
+    // Слайд-шоу
+    this.pokemonImg = document.createElement('img');
+    this.pokemonImg.width = 600;
     
-    rows.shift();
+    this.slideInterval = setInterval(async () => {
+      this.slideIndex++;
+      if (this.slideIndex >= this.images.length) {
+        this.slideIndex = 0;
+      }
+      this.pokemonImg.src = this.images[this.slideIndex];
+    }, 2000);
+
+    this.site.appendChild(this.pokemonImg);
+
+    // Описание сайта
+    this.siteDescription = document.createElement('p');
+    this.siteDescription.textContent = 'Welcome to the Pokemon Database! \
+    Here you can find all the stats and info you need on your favorite Pokemon!';
     
-    if (sortCheckBox.checked) {
-      rows.sort((row1, row2) => {
-        let id1 = Number(row1.querySelector('td').innerText);
-        let id2 = Number(row2.querySelector('td').innerText);
-        return id1 - id2;
-      });
-    }
+    this.site.appendChild(this.siteDescription);
+
+    // Фильтрация по типам
+    this.filter = document.createElement('select');
+    this.filter.id = 'filter';
+    this.filter.addEventListener('change', this.filterTable);
+
+    this.option = document.createElement('option');
+    this.option.value = 'all';
+    this.option.textContent = 'All types';
     
-    rows.forEach(row => table.appendChild(row));
+    this.filter.appendChild(this.option);
+
+    this.filterTypes.forEach(type => {
+        let option = document.createElement('option');
+        option.value = type;
+        option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+        this.filter.appendChild(option);
+    });
+
+    this.site.appendChild(this.filter);
+
+    //всё для сортировки
+    this.sortCheckBox = document.createElement('input');
+    this.sortCheckBox.type = 'checkbox';
+    this.sortCheckBox.id = 'sort_CheckBox';
+    this.sortCheckBox.addEventListener('change', async () => {
+      let table = document.querySelector('table');
+      let rows = Array.from(table.querySelectorAll('tr'));
+      
+      rows.shift();
+      
+      if (this.sortCheckBox.checked) {
+        rows.sort((row1, row2) => {
+          let id1 = Number(row1.querySelector('td').innerText);
+          let id2 = Number(row2.querySelector('td').innerText);
+          return id1 - id2;
+        });
+      }
+
+      rows.forEach(row => table.appendChild(row));
+    });
+
+    this.sortLabel = document.createElement('label');
+    this.sortLabel.innerText = 'Sort by ID';
+    this.sortLabel.htmlFor = 'sort_CheckBox';
+
+    this.sortLabel.appendChild(this.sortCheckBox);
+    this.site.appendChild(this.sortLabel);
+
+    // Поиск по табличке
+    this.searchLabel = document.createElement('label');
+    this.searchLabel.htmlFor = 'search';
+    this.searchLabel.innerText = 'Search by name';
+    
+    this.searchInput = document.createElement('input');
+    this.searchInput.type = 'text';
+    this.searchInput.id = 'searchInput';
+    this.searchInput.name = 'searchInput';
+    
+    this.searchButton = document.createElement('button');
+    this.searchButton.id = 'search-button';
+    this.searchButton.innerText = 'Find';
+
+    this.searchButton.addEventListener('click', this.filterTableByName);
+
+    this.searchInput.addEventListener('keydown', async (event)=> {
+      if(event.key === 'Enter') {
+        this.filterTableByName();
+      }
+    });
+
+    this.searchLabel.appendChild(this.searchInput);
+    this.searchLabel.appendChild(this.searchButton);
+
+    this.site.appendChild(this.searchLabel);
+
+    let table = document.getElementById('tableee');
+    document.body.insertBefore(this.site, table);
+
+    this.createTable();
+    
+    this.addRelatedInfo();
+  }
 }
 
-sortLabel.innerText = 'Sort by ID';
-sortLabel.htmlFor = 'sort_CheckBox';
-
-sortCheckBox.addEventListener('change', sortTable)
-sortLabel.appendChild(sortCheckBox)
-
-let filter = document.createElement('select');
-filter.id = 'filter';
-filter.addEventListener('change', filterTable);
-
-let option = document.createElement('option');
-option.value = 'all';
-option.textContent = 'All types';
-filter.appendChild(option);
-
-let filterTypes = ['water', 'grass', 'fire', 'flying', 'bug'];
-
-filterTypes.forEach(type => {
-    let option = document.createElement('option');
-    option.value = type;
-    option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-    filter.appendChild(option);
-})
-
-site.appendChild(pokemonImg);
-site.appendChild(siteDescription);
-site.appendChild(filter);
-site.appendChild(sortLabel);
-
-document.body.appendChild(site);
-
-createTable();
-// ------------------
-
-let searchLabel = document.createElement('label');
-searchLabel.htmlFor = 'search';
-searchLabel.innerText = 'Search by name';
-
-let searchInput = document.createElement('input');
-searchInput.type = 'text';
-searchInput.id = 'searchInput';
-searchInput.name = 'searchInput';
-
-let searchButton = document.createElement('button');
-searchButton.id = 'search-button';
-searchButton.innerText = 'Find';
-
-searchLabel.appendChild(searchInput);
-searchLabel.appendChild(searchButton);
-
-site.appendChild(searchLabel);
-
-searchButton.addEventListener('click', filterTableByName);
-
-searchInput.addEventListener('keydown', (event)=> {
-  if(event.key === 'Enter'){
-    filterTableByName();
-  }
-});
-
-addRelatedInfo();
-
-document.body.appendChild(site);
-
-document.body.insertBefore(site, table);
+let Database = new PokemonDatabase();
+Database.name_get();
