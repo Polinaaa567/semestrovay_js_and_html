@@ -1,4 +1,4 @@
-import {name_get, createTable, filterTable, filterTableByName, addRelatedInfo} from './main.js'
+import {NameGet, PokemonTable, PokemonMangaAnime} from './main.js'
 
 class PokemonDatabase {
   constructor() {
@@ -6,11 +6,11 @@ class PokemonDatabase {
     this.images = ['Main/files/1.jpg', 'Main/files/2.jpg'];
     this.filterTypes = ['water', 'grass', 'fire', 'flying', 'bug'];
 
-    this.name_get = name_get;
-    this.createTable = createTable;
-    this.filterTable = filterTable;
-    this.filterTableByName = filterTableByName;
-    this.addRelatedInfo = addRelatedInfo;
+    this.name_get = NameGet.name_get;
+    this.createTable = PokemonTable.createTable;
+    this.filterTable = PokemonTable.filterTable;
+    this.filterTableByName = PokemonTable.filterTableByName;
+    this.addRelatedInfo = PokemonMangaAnime.addRelatedInfo;
 
     this.init();
   }
