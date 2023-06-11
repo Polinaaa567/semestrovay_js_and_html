@@ -25,14 +25,14 @@ export class PokemonAPI {
 
 export class MangaAnimeAPI {
     static async fetchRelatedAnime() {
-        let response = await fetch('https://api.jikan.moe/v4/anime?q=pokemon&limit=10ℴ_by=rand');
+        let response = await fetch('https://api.jikan.moe/v4/anime?q=pokemon');
         let data = await response.json();
     
         return data.data;
     }
     
     static async fetchRelatedManga() {
-        let response = await fetch('https://api.jikan.moe/v4/manga?q=pokemon&limit=10');
+        let response = await fetch('https://api.jikan.moe/v4/manga?q=pokemon');
         let data = await response.json();
     
         return data.data;

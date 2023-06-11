@@ -35,6 +35,7 @@ class PokemonDatabase {
 
     // Описание сайта
     this.siteDescription = document.createElement('p');
+    this.siteDescription.id = 'description';
     this.siteDescription.textContent = 'Welcome to the Pokemon Database! \
     Here you can find all the stats and info you need on your favorite Pokemon!';
     
@@ -124,5 +125,32 @@ class PokemonDatabase {
   }
 }
 
+class Timer1 {
+  constructor() {
+      this.timeout;
+      this.events = ['mousemove', 'keypress', 'click'];
+  }
+  
+  async resetTimer() {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(this.showInactiveMessage, 120000);
+  }
+  
+  async showInactiveMessage() {
+      alert('Вы долго не проявляли активность!');
+  }
+  
+  async addEventListener() {
+      this.events.forEach(event => {
+          document.addEventListener(event, () =>this.resetTimer());
+      });
+    
+      this.resetTimer();
+  }
+}
+
 let Database = new PokemonDatabase();
 Database.name_get();
+
+let timer = new Timer1();
+timer.addEventListener();

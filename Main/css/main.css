@@ -2,36 +2,45 @@ header{
     position: sticky;
     z-index:1;
     top: 0;
-    font-size: 70%;
-    line-height: 50px;
+    font-size: 90%;
+    line-height: 66px;
     text-align: center;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color:rgb(133, 206, 210)
+    font-family:'Times New Roman', Times, serif;
+    background-image: linear-gradient(rgb(133, 206, 210), rgb(81, 194, 225));
+
 }
+
 th, td {
     border: 2px solid grey;
     padding: 2px 30px;
     text-align: center;
-    font-size: 110%;
+    font-size: 100%;
     font-family: 'Times New Roman', Times, serif;
 } 
 
 img{
-    /* height: auto; */
     display:block;
     margin:auto;
-    
 }
+
+input, p{
+    font-size: 100%;
+    font-family: 'Times New Roman', Times, serif;
+}
+
 button{
     text-align: center;
-    font-size: 90%;
+    font-size: 100%;
     font-family: 'Times New Roman', Times, serif;
+    border-radius: 9px;
 }
+
 .my_var{
-    text-align: center;;
-    font-size: 110%;
+    text-align: center;
+    font-size: 100%;
     font-family: 'Times New Roman', Times, serif;
 }
+
 .pokemon-image:hover {
     transform: scale(1.2);
     transition: transform  0.2s ease-in-out;
@@ -39,4 +48,33 @@ button{
 
 label {
     margin: 10px;
+    font-size: 100%;
+}
+
+#filter {
+    font-size: 100%;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-size: 180%;
+    text-decoration:underline;
+}
+
+strong{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-size: 160%;
+    margin: 10 20px;
+}
+
+p {
+    margin: 10 20px;
+}
+
+#animePoster, #mangaPoster{
+    cursor:pointer;
 }

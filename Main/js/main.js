@@ -48,13 +48,36 @@ export class PokemonTable{
         row.appendChild(typeCell);
         row.appendChild(abilitieCell);
         row.appendChild(imageCell);
+
+        row.childNodes.forEach(cell => {
+            cell.addEventListener('mouseover', async() => {
+              cell.style.backgroundColor = this.getRandomColor();
+            });
+            cell.addEventListener('mouseout', async () => {
+              cell.style.backgroundColor = '';
+            });
+          });
+        
             
         table.appendChild(row);
+    }
+
+    getRandomColor() {
+        const letters = 'ABCDEF';
+        let color = '#';
+        
+        for (let i = 0; i < 3; i++) {
+            let lightColor = letters[Math.floor(Math.random() * letters.length)];
+            color += lightColor + lightColor;
+        }
+
+        return color;
     }
 
     static async createTable() {
         let pokemonList = await PokemonAPI.fetchData(); 
         let pokemonTable = new PokemonTable();
+        
         await Promise.all(
             pokemonList.map(pokemon => pokemonTable.createPokemonRow(pokemon))
         );
@@ -127,11 +150,12 @@ export class PokemonMangaAnime{
       
             let animePoster = document.createElement('img');
             animePoster.src = anime.images.jpg.image_url;
-            animePoster.width = 150;
-            
+            animePoster.id = 'animePoster';
+            animePoster.width = 200;
       
             let animeInfo = document.createElement('div');
-            if (anime.title_english && anime.episodes && anime.score) {
+            if (anime.title_english && anime.episodes > 5 && anime.score
+                 && anime.title_english.toLowerCase().includes('pokémon')) {
                 animeInfo.innerHTML = `
                     <strong>${anime.title_english}</strong>
                     <p>Episodes: ${anime.episodes}</p>
@@ -158,11 +182,14 @@ export class PokemonMangaAnime{
       
             let mangaPoster = document.createElement('img');
             mangaPoster.src = manga.images.jpg.image_url;
+            mangaPoster.id = 'mangaPoster';
             mangaPoster.width = 150;
-             
-            if (manga.title_english){
+
+            if (manga.title_english && manga.chapters > 5 && manga.scored && 
+                manga.title_english.toLowerCase().includes('pokémon')) {
       
             let mangaInfo = document.createElement('div');
+            
             mangaInfo.innerHTML = `
                 <strong>${manga.title_english}</strong>
                 <p>Chapters: ${manga.chapters}</p>

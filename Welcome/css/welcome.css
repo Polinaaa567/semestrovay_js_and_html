@@ -14,16 +14,15 @@ label {
     margin: 5px ;
     font-size: 120%;
     font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
-    
+    font-style: italic;    
 }
 
 input {
     font-size: 100%;
     font-family: 'Times New Roman', Times, serif;
     transform: skewX(-10deg);
-
 }
+
 img {
     max-width: 60%;
     height: auto;
@@ -37,3 +36,4 @@ img {
     font: bold 14pt "Times New Roman", Times, sans-serif, center;
     background-image: linear-gradient(rgb(177, 177, 42), rgb(246, 174, 6));
 }
+
