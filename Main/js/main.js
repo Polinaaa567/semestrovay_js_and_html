@@ -183,7 +183,7 @@ export class PokemonMangaAnime{
             let mangaPoster = document.createElement('img');
             mangaPoster.src = manga.images.jpg.image_url;
             mangaPoster.id = 'mangaPoster';
-            mangaPoster.width = 150;
+            mangaPoster.width = 200;
 
             if (manga.title_english && manga.chapters > 5 && manga.scored && 
                 manga.title_english.toLowerCase().includes('pokémon')) {
