@@ -1,4 +1,6 @@
-import {NameGet, PokemonTable, PokemonMangaAnime} from './main.js'
+'use strict'
+
+import {NameGet, PokemonTable, PokemonMangaAnime} from './main.js';
 
 class PokemonDatabase {
   constructor() {
@@ -18,7 +20,7 @@ class PokemonDatabase {
   init() {
     this.site = document.createElement('my_var');
     this.site.className = 'my_var';
-
+ 
     // Слайд-шоу
     this.pokemonImg = document.createElement('img');
     this.pokemonImg.width = 600;
@@ -66,20 +68,13 @@ class PokemonDatabase {
     this.sortCheckBox.type = 'checkbox';
     this.sortCheckBox.id = 'sort_CheckBox';
     this.sortCheckBox.addEventListener('change', async () => {
-      let table = document.querySelector('table');
-      let rows = Array.from(table.querySelectorAll('tr'));
-      
-      rows.shift();
-      
       if (this.sortCheckBox.checked) {
-        rows.sort((row1, row2) => {
-          let id1 = Number(row1.querySelector('td').innerText);
-          let id2 = Number(row2.querySelector('td').innerText);
-          return id1 - id2;
-        });
+        await PokemonTable.sortTable();
+      } 
+      else {
+        table.querySelectorAll("tr").forEach(item => item.remove());
+        await PokemonTable.createTable();
       }
-
-      rows.forEach(row => table.appendChild(row));
     });
 
     this.sortLabel = document.createElement('label');

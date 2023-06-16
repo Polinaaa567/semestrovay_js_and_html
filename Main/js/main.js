@@ -1,10 +1,12 @@
+'use strict'
+
 import {PokemonAPI, MangaAnimeAPI} from "./data.js";
 
 export class NameGet{
     static name_get() {
-        let username = localStorage.getItem('username');
+        this.username = localStorage.getItem('username');
       
-        document.getElementById('username').innerHTML = username;
+        document.getElementById('username').innerHTML = this.username;
     }
 }
 
@@ -25,7 +27,7 @@ export class PokemonTable{
     async createPokemonRow(pokemon) {
         let {id, name, type, abilities, image} = await PokemonAPI.fetchPokemonData(pokemon.url);
     
-        let row = document.createElement("tr");
+        let row = document.createElement("tr"); //контейнер создания строки таблицы
         let idCell = document.createElement("td");
         let nameCell = document.createElement("td");
         let typeCell = document.createElement('td');
@@ -77,11 +79,9 @@ export class PokemonTable{
     static async createTable() {
         let pokemonList = await PokemonAPI.fetchData(); 
         let pokemonTable = new PokemonTable();
-        
-        await Promise.all(
-            pokemonList.map(pokemon => pokemonTable.createPokemonRow(pokemon))
-        );
     
+        pokemonList.map(pokemon => pokemonTable.createPokemonRow(pokemon))
+
         let tableCon = document.getElementById("tableee");
         
         tableCon.appendChild(table);
@@ -128,7 +128,22 @@ export class PokemonTable{
                 row.style.display = '';
             }
         });
-    }      
+    }  
+    
+    static async sortTable() {
+        let rows = Array.from(table.querySelectorAll('tr'));
+      
+        rows.shift();
+      
+        rows.sort((row1, row2) => {
+            let id1 = Number(row1.querySelector('td').innerText);
+            let id2 = Number(row2.querySelector('td').innerText);
+            
+            return id1 - id2;
+        });
+
+        rows.forEach(row => table.appendChild(row));
+    }
 }
 
 export class PokemonMangaAnime{

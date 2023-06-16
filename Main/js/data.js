@@ -1,3 +1,5 @@
+'use strict'
+
 export class PokemonAPI {
 
     // функция которая возвращает данные в виде имени покемонов и url,
@@ -5,7 +7,7 @@ export class PokemonAPI {
         let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=40');
         let data = await response.json();
     
-        return data.results;
+        return data.results; //массив объектов
     }
 
     // в котором прописаны способности и тип

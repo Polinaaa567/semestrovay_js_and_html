@@ -1,3 +1,5 @@
+'use strict'
+
 class Form {
     constructor() {
         this.form = document.createElement('form');
@@ -24,7 +26,7 @@ class Form {
     }
     
     async saveUsername(name) {
-        localStorage.setItem('username', name);
+        localStorage.setItem('username', name); //хранение данных в браузере
     }
 
     random(min, max) {
@@ -42,15 +44,15 @@ class Form {
                 await this.saveUsername(name);
                 window.location.replace('main.html');
             }
-      });
+        });
 
         this.buttonNext.addEventListener('mouseenter', async ()=> {
-        let audio = new Audio('Welcome/files/2.mp3');
-        audio.play();
-  
-        this.buttonNext.style.left = `${this.random(0, 100)}%`;
-        this.buttonNext.style.top = `${this.random(0, 100)}%`;
-      });
+            let audio = new Audio('Welcome/files/2.mp3');
+            audio.play();
+    
+            this.buttonNext.style.left = `${this.random(0, 100)}%`;
+            this.buttonNext.style.top = `${this.random(0, 100)}%`;
+        });
     }
 }  
   
