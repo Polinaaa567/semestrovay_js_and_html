@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import {NameGet, PokemonTable, PokemonMangaAnime} from './main.js';
 
@@ -7,12 +7,14 @@ class PokemonDatabase {
     this.slideIndex = 0;
     this.images = ['Main/files/1.jpg', 'Main/files/2.jpg'];
     this.filterTypes = ['water', 'grass', 'fire', 'flying', 'bug'];
+    this.SortRadioButtons = ['ID', 'Имени'];
 
     this.name_get = NameGet.name_get;
     this.createTable = PokemonTable.createTable;
     this.filterTable = PokemonTable.filterTable;
     this.filterTableByName = PokemonTable.filterTableByName;
     this.addRelatedInfo = PokemonMangaAnime.addRelatedInfo;
+    this.sortByName = PokemonTable.sortTablebyName;
 
     this.init();
   }
@@ -23,6 +25,7 @@ class PokemonDatabase {
  
     // Слайд-шоу
     this.pokemonImg = document.createElement('img');
+    this.pokemonImg.id = 'Slide-Show';
     this.pokemonImg.width = 600;
     
     this.slideInterval = setInterval(async () => {
@@ -38,8 +41,10 @@ class PokemonDatabase {
     // Описание сайта
     this.siteDescription = document.createElement('p');
     this.siteDescription.id = 'description';
-    this.siteDescription.textContent = 'Welcome to the Pokemon Database! \
-    Here you can find all the stats and info you need on your favorite Pokemon!';
+    
+    this.siteDescription.textContent = 'Добро пожаловать в базу данных о Покемонах! \
+    Здесь вы можете найти всю необходимую статистику и информацию о вашем любимом \
+    покемоне! А также информация об аниме и мангах';
     
     this.site.appendChild(this.siteDescription);
 
@@ -63,31 +68,38 @@ class PokemonDatabase {
 
     this.site.appendChild(this.filter);
 
-    //всё для сортировки
-    this.sortCheckBox = document.createElement('input');
-    this.sortCheckBox.type = 'checkbox';
-    this.sortCheckBox.id = 'sort_CheckBox';
-    this.sortCheckBox.addEventListener('change', async () => {
-      if (this.sortCheckBox.checked) {
-        await PokemonTable.sortTable();
-      } 
-      else {
-        table.querySelectorAll("tr").forEach(item => item.remove());
-        await PokemonTable.createTable();
-      }
-    });
+    this.sortRadioGroup = document.createElement('my_div3');
+    this.site.appendChild(this.sortRadioGroup);
 
-    this.sortLabel = document.createElement('label');
-    this.sortLabel.innerText = 'Sort by ID';
-    this.sortLabel.htmlFor = 'sort_CheckBox';
+    this.SortRadioButtons.forEach(sortBy => {
+      let SortRadioButton = document.createElement('input');
+      SortRadioButton.type = 'radio';
+      SortRadioButton.value = sortBy;
+      SortRadioButton.name = 'sortRadioButtons';
+      SortRadioButton.id = `sort_radio_${sortBy}`;
+      SortRadioButton.addEventListener('change', async () => {
+        if (SortRadioButton.checked) {
+          if (sortBy === 'ID') {
+            await PokemonTable.sortTable();
+          }
+          else if (sortBy === 'Имени') {
+            await PokemonTable.sortTablebyName();
+          }
+        }
+      })
+      
+      let SortRadioButtonLabel = document.createElement('label');
+      SortRadioButtonLabel.innerText = `Сортировать по ${sortBy}`;
+      SortRadioButtonLabel.htmlFor = `sort_radio_${sortBy}`;
 
-    this.sortLabel.appendChild(this.sortCheckBox);
-    this.site.appendChild(this.sortLabel);
+      this.sortRadioGroup.appendChild(SortRadioButtonLabel);
+      this.sortRadioGroup.appendChild(SortRadioButton);
+    })
 
     // Поиск по табличке
     this.searchLabel = document.createElement('label');
     this.searchLabel.htmlFor = 'search';
-    this.searchLabel.innerText = 'Search by name';
+    this.searchLabel.innerText = 'Поиск по имени';
     
     this.searchInput = document.createElement('input');
     this.searchInput.type = 'text';
@@ -96,7 +108,7 @@ class PokemonDatabase {
     
     this.searchButton = document.createElement('button');
     this.searchButton.id = 'search-button';
-    this.searchButton.innerText = 'Find';
+    this.searchButton.innerText = 'Найти';
 
     this.searchButton.addEventListener('click', this.filterTableByName);
 

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import {PokemonAPI, MangaAnimeAPI} from "./data.js";
 
@@ -13,7 +13,7 @@ export class NameGet{
 let table = document.createElement('table');
 let headerRow = document.createElement('tr');
 
-let headers = ['ID', 'Name', 'Type', 'Abilitie', 'Image'];
+let headers = ['ID', 'Имя', 'Тип', 'Способности', 'Фотография'];
 
 headers.forEach(header => {
     let th = document.createElement('th');
@@ -144,6 +144,21 @@ export class PokemonTable{
 
         rows.forEach(row => table.appendChild(row));
     }
+
+    static async sortTablebyName() {
+        let rows = Array.from(table.querySelectorAll('tr'));
+      
+        rows.shift();
+
+        rows.sort((row1, row2) => {
+            let name1 = row1.querySelector('td:nth-child(2)').innerText;
+            let name2 = row2.querySelector('td:nth-child(2)').innerText;
+
+            return name1.localeCompare(name2);
+        })
+
+        rows.forEach(row=>table.appendChild(row));
+    }
 }
 
 export class PokemonMangaAnime{
@@ -153,7 +168,7 @@ export class PokemonMangaAnime{
       
         let relatedAnimeElem = document.createElement('div');
         let Pokemon_Anime = document.createElement('h2');
-        Pokemon_Anime.innerText = 'Pokemon Anime';
+        Pokemon_Anime.innerText = 'Аниме с Покемонами';
       
         document.body.appendChild(Pokemon_Anime);
         
@@ -162,23 +177,35 @@ export class PokemonMangaAnime{
         // Добавление информации об аниме
         relatedAnimeList.forEach(anime => {
             let animeElem = document.createElement('div');
+            animeElem.style.display = 'flex';
+            animeElem.style.alignItems = 'stretch';
+            animeElem.style.justifyContent = 'space-between';
       
             let animePoster = document.createElement('img');
-            animePoster.src = anime.images.jpg.image_url;
+            animePoster.src = `https://shikimori.one${anime.image.preview}`;
             animePoster.id = 'animePoster';
             animePoster.width = 200;
       
             let animeInfo = document.createElement('div');
-            if (anime.title_english && anime.episodes > 5 && anime.score
-                 && anime.title_english.toLowerCase().includes('pokémon')) {
-                animeInfo.innerHTML = `
-                    <strong>${anime.title_english}</strong>
-                    <p>Episodes: ${anime.episodes}</p>
-                    <p>Rating: ${anime.score}</p>
-                    <p>Description: ${anime.synopsis}</p>
+            let infoText = document.createElement('div7');
+
+            if (anime.russian && anime.episodes > 5 && anime.score) {
+                infoText.innerHTML = `
+                    <strong>Название: ${anime.russian}</strong>
+                    <p>Кол-во эпизодов: ${anime.episodes}</p>
+                    <p>Оценка пользователей: ${anime.score}</p>
+                    <p>Дата выхода: ${anime.aired_on}</p>
                 `;
-      
-                let animeLink = anime.url || '';
+
+                animeInfo.appendChild(infoText);
+
+                animeInfo.style.display = 'inline-block';
+                animeInfo.style.verticalAlign = 'top';
+
+                animeInfo.style.flexGrow = 1;
+                animeInfo.style.paddingLeft = '10px';
+
+                let animeLink = `https://shikimori.one${anime.url}` || '';
 
                 animePoster.addEventListener('click', ()=> {
                     window.open(animeLink, '_blanc');
@@ -188,47 +215,66 @@ export class PokemonMangaAnime{
                 animeElem.appendChild(animeInfo);
               
                 relatedAnimeElem.appendChild(animeElem);
+
+                let hrElem = document.createElement('hr');
+                hrElem.style.borderTop = '1px solid #eee';
+                relatedAnimeElem.appendChild(hrElem);
             }        
         });
       
         // Добавление информации о мангах
         relatedMangaList.forEach(manga => {
             let mangaElem = document.createElement('div');
+            mangaElem.style.display = 'flex';
+            mangaElem.style.alignItems = 'stretch';
+            mangaElem.style.justifyContent = 'space-between';
       
             let mangaPoster = document.createElement('img');
-            mangaPoster.src = manga.images.jpg.image_url;
+            mangaPoster.src = `https://shikimori.one${manga.image.original}`;
             mangaPoster.id = 'mangaPoster';
             mangaPoster.width = 200;
 
-            if (manga.title_english && manga.chapters > 5 && manga.scored && 
-                manga.title_english.toLowerCase().includes('pokémon')) {
-      
             let mangaInfo = document.createElement('div');
-            
-            mangaInfo.innerHTML = `
-                <strong>${manga.title_english}</strong>
-                <p>Chapters: ${manga.chapters}</p>
-                <p>Rating: ${manga.scored}</p>
-                <p>Description: ${manga.synopsis}</p>
-            `;
-      
-            let MangaLink = manga.url || '';
-                  
-                mangaPoster.addEventListener('click', ()=> {
-                    window.open(MangaLink, '_blanc');
-                });
-      
-            mangaElem.appendChild(mangaPoster);
-            mangaElem.appendChild(mangaInfo);
-      
-            relatedMangaElem.appendChild(mangaElem);
+            let infoText = document.createElement('div7');
+
+            if (manga.russian && manga.chapters > 5 && manga.score != 0) {
+
+                infoText.innerHTML = `
+                    <strong>Название: ${manga.russian}</strong>
+                    <p>Кол-во глав: ${manga.chapters}</p>
+                    <p>Оценка пользователей: ${manga.score}</p>
+                    <p>Дата выхода: ${manga.aired_on}</p>
+                `;
+
+                mangaInfo.appendChild(infoText);
+
+                mangaInfo.style.display = 'inline-block';
+                mangaInfo.style.verticalAlign = 'top';
+
+                mangaInfo.style.flexGrow = 1;
+                mangaInfo.style.paddingLeft = '10px';
+
+                let MangaLink = `https://shikimori.one${manga.url}` || '';
+                    
+                    mangaPoster.addEventListener('click', ()=> {
+                        window.open(MangaLink, '_blanc');
+                    });
+        
+                mangaElem.appendChild(mangaPoster);
+                mangaElem.appendChild(mangaInfo);
+        
+                relatedMangaElem.appendChild(mangaElem);
+
+                let hrElem = document.createElement('hr');
+                hrElem.style.borderTop = '1px solid #eee';
+                relatedMangaElem.appendChild(hrElem);
             }
         });
       
         document.body.appendChild(relatedAnimeElem);
       
         let Pokemon_Manga = document.createElement('h2');
-        Pokemon_Manga.innerText = 'Pokemon Manga';
+        Pokemon_Manga.innerText = 'Манги с Покемонами';
       
         document.body.appendChild(Pokemon_Manga);
         document.body.appendChild(relatedMangaElem);

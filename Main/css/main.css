@@ -12,13 +12,13 @@ header{
 
 th, td {
     border: 2px solid grey;
-    padding: 2px 30px;
+    padding: 1 30px;
     text-align: center;
     font-size: 110%;
     font-family: 'Times New Roman', Times, serif;
 } 
 
-img{
+#Slide-Show{
     display:block;
     margin:auto;
 }
@@ -77,4 +77,5 @@ p {
 
 #animePoster, #mangaPoster{
     cursor:pointer;
+    margin: 10 30px;
 }
