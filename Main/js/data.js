@@ -28,13 +28,15 @@ export class PokemonAPI {
 export class MangaAnimeAPI {
     static async fetchRelatedAnime() {
         let response = await fetch('https://shikimori.one/api/animes?limit=100&search=pokemon');
+        await new Promise(resolve => setTimeout(resolve, 1000));
         let data = await response.json();
-    
+            
         return data;
     }
 
     static async fetchRelatedManga() {
         let response = await fetch('https://shikimori.one/api/mangas?limit=100&search=pokemon');
+        await new Promise(resolve => setTimeout(resolve, 1000));
         let data = await response.json();
     
         return data;
